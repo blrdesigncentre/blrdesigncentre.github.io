@@ -4,6 +4,9 @@ const questionBank = {};
 // Shuffle Cards Storage
 const shuffleCards = [];
 
+// Rapid Fire Questions Storage
+const rapidFireQuestions = [];
+
 // Parse CSV data
 function parseCSV(text) {
   const lines = text.split('\n');
@@ -104,6 +107,35 @@ async function loadShuffleCards() {
   }
 }
 
+// Load rapid fire questions from CSV file
+async function loadRapidFireQuestions() {
+  try {
+    const response = await fetch('./collateral/questions/rapid-fire-bank.csv');
+    const text = await response.text();
+
+    // Parse CSV
+    const data = parseCSV(text);
+
+    // Store rapid fire questions
+    // Expected CSV columns: id, no, bucket, question, answer
+    data.forEach(row => {
+      if (row['id'] && row['bucket'] && row['question']) {
+        rapidFireQuestions.push({
+          id: row['id'],
+          no: row['no'],
+          bucket: row['bucket'],
+          question: row['question'],
+          answer: row['answer']
+        });
+      }
+    });
+
+    console.log('Rapid fire questions loaded:', rapidFireQuestions);
+  } catch (error) {
+    console.error('Error loading rapid fire questions:', error);
+  }
+}
+
 // Timer State
 const timerState = {
   seconds: 25,
@@ -131,7 +163,16 @@ const gameState = {
   currentClueImage: null, // Store current clue image path
   clueUsed: false, // Track if clue was used for current question
   selectedShuffleCard: null, // Store the selected shuffle card
-  shuffleUsed: false // Track if shuffle has been used for current question
+  shuffleUsed: false, // Track if shuffle has been used for current question
+  rapidFire: {
+    active: false,
+    currentBucket: null, // rb1-rb5 based on team
+    currentTeamIndex: null,
+    currentQuestionIndex: 0,
+    questions: [],
+    score: 0,
+    waitingForTeamSelection: false
+  }
 };
 
 // Save/Load Game Functions
@@ -223,6 +264,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // Load shuffle cards on page load
   await loadShuffleCards();
+
+  // Load rapid fire questions on page load
+  await loadRapidFireQuestions();
 
   // Check if there's a saved game and show resume button
   if (hasSavedGame()) {
@@ -1306,10 +1350,25 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Timeline Button Click Handlers (for round selection)
   document.querySelectorAll('.timeline-button').forEach((button, index) => {
     button.addEventListener('click', function() {
-      gameState.currentRound = index + 1;
+      const roundNum = index + 1;
+      gameState.currentRound = roundNum;
       gameState.turnsThisRound = 0; // Reset turns when manually changing rounds
       updateRoundHighlight();
       updateActiveColumns();
+
+      // Handle Rapid Fire (Round 5)
+      if (roundNum === 5) {
+        if (gameState.rapidFire.active) {
+          closeRapidFireMode();
+        } else {
+          openRapidFireMode();
+        }
+      } else {
+        // If switching to another round, close rapid fire if active
+        if (gameState.rapidFire.active) {
+          closeRapidFireMode();
+        }
+      }
     });
   });
 
@@ -1354,6 +1413,216 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.log(`Manual -5 points from ${gameState.teams[teamIndex].name}`);
       }
     });
+  });
+
+  // ===== RAPID FIRE FUNCTIONS =====
+
+  function openRapidFireMode() {
+    gameState.rapidFire.active = true;
+    gameState.rapidFire.waitingForTeamSelection = true;
+
+    // Show title screen and hide question grid
+    document.getElementById('question-grid').classList.add('hidden');
+    document.getElementById('rf-title-screen').classList.remove('hidden');
+
+    // Enable team selection mode - make all team labels pulsate
+    document.querySelectorAll('.team-label').forEach(team => {
+      team.classList.add('rf-team-selection-mode');
+    });
+  }
+
+  function closeRapidFireMode() {
+    // Stop timer if running
+    stopTimer();
+    resetTimer();
+
+    // Remove all rapid fire classes from team labels
+    document.querySelectorAll('.team-label').forEach(team => {
+      team.classList.remove('rf-active-team');
+      team.classList.remove('rf-team-selection-mode');
+    });
+
+    // Hide all rapid fire screens
+    document.getElementById('rf-title-screen').classList.add('hidden');
+    document.getElementById('rf-question-screen').classList.add('hidden');
+    document.getElementById('rf-score-screen').classList.add('hidden');
+
+    // Show question grid
+    document.getElementById('question-grid').classList.remove('hidden');
+
+    // Reset rapid fire state
+    gameState.rapidFire.active = false;
+    gameState.rapidFire.currentBucket = null;
+    gameState.rapidFire.currentTeamIndex = null;
+    gameState.rapidFire.currentQuestionIndex = 0;
+    gameState.rapidFire.questions = [];
+    gameState.rapidFire.score = 0;
+    gameState.rapidFire.waitingForTeamSelection = false;
+  }
+
+  function startRapidFire(teamIndex) {
+    // Map team index to bucket (team-a -> rb1, team-b -> rb2, etc.)
+    const bucketMap = ['rb1', 'rb2', 'rb3', 'rb4', 'rb5'];
+    const bucket = bucketMap[teamIndex];
+
+    // Get questions for this bucket
+    const bucketQuestions = rapidFireQuestions.filter(q => q.bucket === bucket);
+
+    if (bucketQuestions.length === 0) {
+      console.error(`No questions found for bucket ${bucket}`);
+      return;
+    }
+
+    // Store rapid fire state
+    gameState.rapidFire.currentBucket = bucket;
+    gameState.rapidFire.currentTeamIndex = teamIndex;
+    gameState.rapidFire.currentQuestionIndex = 0;
+    gameState.rapidFire.questions = bucketQuestions;
+    gameState.rapidFire.score = 0;
+    gameState.rapidFire.waitingForTeamSelection = false;
+
+    // Remove pulsating effect and highlight only selected team
+    document.querySelectorAll('.team-label').forEach(team => {
+      team.classList.remove('rf-team-selection-mode');
+    });
+    document.querySelectorAll('.team-label')[teamIndex].classList.add('rf-active-team');
+
+    // Hide title screen, show question screen
+    document.getElementById('rf-title-screen').classList.add('hidden');
+    document.getElementById('rf-question-screen').classList.remove('hidden');
+
+    // Start timer (1:20 = 80 seconds)
+    startTimer(80);
+
+    // Display first question
+    displayRapidFireQuestion();
+  }
+
+  function displayRapidFireQuestion() {
+    const qIndex = gameState.rapidFire.currentQuestionIndex;
+    const questions = gameState.rapidFire.questions;
+
+    if (qIndex >= questions.length) {
+      // No more questions, show score
+      showRapidFireScore();
+      return;
+    }
+
+    const question = questions[qIndex];
+
+    // Update counter
+    document.getElementById('rf-question-counter').textContent = `${qIndex + 1}/${questions.length}`;
+
+    // Update question content
+    document.getElementById('rf-question-content').textContent = question.question;
+
+    // Update answer content (hidden by default)
+    const answerEl = document.getElementById('rf-answer-content');
+    answerEl.textContent = question.answer;
+    answerEl.classList.add('hidden');
+
+    // Update navigation buttons
+    document.getElementById('rf-prev').disabled = qIndex === 0;
+    document.getElementById('rf-next').disabled = qIndex === questions.length - 1;
+  }
+
+  function showRapidFireScore() {
+    // Stop timer
+    stopTimer();
+    resetTimer();
+
+    // Hide question screen, show score screen
+    document.getElementById('rf-question-screen').classList.add('hidden');
+    document.getElementById('rf-score-screen').classList.remove('hidden');
+
+    // Update score display
+    const teamName = gameState.teams[gameState.rapidFire.currentTeamIndex].name;
+    document.getElementById('rf-team-name').textContent = teamName;
+    document.getElementById('rf-score-text').textContent = `Score: ${gameState.rapidFire.score}/15`;
+
+    // Update team's actual score
+    updateScore(gameState.rapidFire.currentTeamIndex, gameState.rapidFire.score);
+
+    // Reset for next team selection
+    gameState.rapidFire.waitingForTeamSelection = true;
+    document.querySelectorAll('.team-label').forEach(team => {
+      team.classList.add('rf-team-selection-mode');
+    });
+  }
+
+  // Rapid Fire Event Handlers
+
+  // Team label click during rapid fire
+  document.querySelectorAll('.team-label').forEach((teamLabel, index) => {
+    teamLabel.addEventListener('click', function() {
+      if (gameState.rapidFire.active && gameState.rapidFire.waitingForTeamSelection) {
+        startRapidFire(index);
+      }
+    });
+  });
+
+  // Close button - return to title screen
+  document.getElementById('rf-close').addEventListener('click', function() {
+    stopTimer();
+    resetTimer();
+    document.getElementById('rf-question-screen').classList.add('hidden');
+    document.getElementById('rf-title-screen').classList.remove('hidden');
+
+    // Remove active team highlight
+    document.querySelectorAll('.team-label').forEach(team => {
+      team.classList.remove('rf-active-team');
+    });
+
+    // Reset to team selection mode
+    gameState.rapidFire.waitingForTeamSelection = true;
+    document.querySelectorAll('.team-label').forEach(team => {
+      team.classList.add('rf-team-selection-mode');
+    });
+  });
+
+  // Previous question button
+  document.getElementById('rf-prev').addEventListener('click', function() {
+    if (gameState.rapidFire.currentQuestionIndex > 0) {
+      gameState.rapidFire.currentQuestionIndex--;
+      displayRapidFireQuestion();
+    }
+  });
+
+  // Next question button
+  document.getElementById('rf-next').addEventListener('click', function() {
+    if (gameState.rapidFire.currentQuestionIndex < gameState.rapidFire.questions.length - 1) {
+      gameState.rapidFire.currentQuestionIndex++;
+      displayRapidFireQuestion();
+    }
+  });
+
+  // Correct answer button
+  document.getElementById('rf-correct').addEventListener('click', function() {
+    // Show answer
+    document.getElementById('rf-answer-content').classList.remove('hidden');
+
+    // Increment score
+    gameState.rapidFire.score++;
+
+    // Move to next question after a brief delay
+    setTimeout(() => {
+      gameState.rapidFire.currentQuestionIndex++;
+      displayRapidFireQuestion();
+    }, 800);
+  });
+
+  // Wrong answer button
+  document.getElementById('rf-wrong').addEventListener('click', function() {
+    // Show answer
+    document.getElementById('rf-answer-content').classList.remove('hidden');
+
+    // Don't increment score
+
+    // Move to next question after a brief delay
+    setTimeout(() => {
+      gameState.rapidFire.currentQuestionIndex++;
+      displayRapidFireQuestion();
+    }, 800);
   });
 
 });

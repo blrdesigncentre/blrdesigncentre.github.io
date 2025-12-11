@@ -1532,8 +1532,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     const bucketMap = ['rb1', 'rb2', 'rb3', 'rb4', 'rb5'];
     const bucket = bucketMap[teamIndex];
 
-    // Get questions for this bucket (limit to first 10 questions)
-    const bucketQuestions = rapidFireQuestions.filter(q => q.bucket === bucket).slice(0, 10);
+    // Get questions for this bucket (limit to first 5 questions)
+    const bucketQuestions = rapidFireQuestions.filter(q => q.bucket === bucket).slice(0, 5);
 
     if (bucketQuestions.length === 0) {
       console.error(`No questions found for bucket ${bucket}`);

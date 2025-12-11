@@ -710,14 +710,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       // Show question display
       questionDisplay.classList.remove('hidden');
 
-      // Reset timer
+      // Reset timer (timer will be started manually by clicking Start button)
       resetTimer();
-
-      // Start timer automatically only for rounds 1 and 2
-      // For rounds 3 and 4, timer will start after shuffle card is revealed
-      if (gameState.currentRound === 1 || gameState.currentRound === 2) {
-        startTimer();
-      }
 
       // Reset reveal states
       document.getElementById('qd-answer-content').classList.remove('revealed');
@@ -1120,10 +1114,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       // Mark as used
       shuffleBadge.classList.add('used');
 
-      // For rounds 3 and 4, start timer after shuffle card is revealed
-      if (gameState.currentRound === 3 || gameState.currentRound === 4) {
-        startTimer();
-      }
+      // Timer will be started manually by clicking Start button
     }
   }
 
@@ -1561,8 +1552,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('rf-title-screen').classList.add('hidden');
     document.getElementById('rf-question-screen').classList.remove('hidden');
 
-    // Start timer (1:20 = 80 seconds)
-    startTimer(80);
+    // Set timer to 90 seconds (1:30) but don't start automatically
+    // Timer will be started manually by clicking Start button
+    timerState.seconds = 90;
+    updateTimerDisplay();
 
     // Display first question
     displayRapidFireQuestion();

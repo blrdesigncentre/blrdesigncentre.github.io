@@ -1021,7 +1021,22 @@ sl-button.question-tile.answered::part(base) {
 /* #endregion */
 
 /* #region Overlays */
-#clue-overlay,
+#clue-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.342);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: var(--spacing-md);
+  padding-top: calc(var(--spacing-md) + 100px);
+  padding-left: calc(var(--spacing-md) + 50px);
+}
+
 #location-overlay,
 #shuffle-overlay,
 #floor-overlay {
@@ -1047,8 +1062,8 @@ sl-button.question-tile.answered::part(base) {
 
 #clue-overlay-content {
   position: relative;
-  width: min(90%, 56.25rem);
-  height: min(80vh, 43.75rem);
+  width: min(40%, 30rem);
+  height: min(40vh, 25rem);
   background-color: white;
   padding: var(--spacing-md);
   border-radius: var(--radius-md);

@@ -731,6 +731,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         document.getElementById('qd-question-text').textContent = questionData.question;
         document.getElementById('qd-answer-text').textContent = questionData.answer;
 
+        // Clear previous clue image from DOM to prevent old image from showing
+        const clueImageElement = document.getElementById('clue-image');
+        clueImageElement.src = '';
+        clueImageElement.onerror = null;
+        clueImageElement.onload = null;
+
         // Store clue image path
         if (questionData.clueImage) {
           gameState.currentClueImage = `./collateral/clues/${questionData.clueImage}`;
@@ -1601,7 +1607,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Update score display
     const teamName = gameState.teams[gameState.rapidFire.currentTeamIndex].name;
     document.getElementById('rf-team-name').textContent = teamName;
-    document.getElementById('rf-score-text').textContent = `Score: ${gameState.rapidFire.score}/15`;
+    document.getElementById('rf-score-text').textContent = `Score: ${gameState.rapidFire.score}/5`;
 
     // Update team's actual score
     updateScore(gameState.rapidFire.currentTeamIndex, gameState.rapidFire.score);

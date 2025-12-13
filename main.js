@@ -1623,13 +1623,15 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Rapid Fire Event Handlers
 
   // Team label click during rapid fire
-  document.querySelectorAll('.team-label').forEach((teamLabel, index) => {
+  document.querySelectorAll('.team-label').forEach((teamLabel) => {
     teamLabel.addEventListener('click', function() {
       if (gameState.rapidFire.active && gameState.rapidFire.waitingForTeamSelection) {
-        startRapidFire(index);
-            document.getElementById('rf-score-screen').classList.add('hidden');
-              
-
+        const teamId = this.id; // Get team ID from the element's id attribute
+        const teamIndex = getTeamIndexById(teamId);
+        if (teamIndex !== -1) {
+          startRapidFire(teamIndex);
+          document.getElementById('rf-score-screen').classList.add('hidden');
+        }
       }
     });
   });

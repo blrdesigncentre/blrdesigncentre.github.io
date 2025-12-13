@@ -1,0 +1,33 @@
+category ,round,question number,code ,question ,clue ,answer ,location bonus 
+culture,t1,1,c_t1_1,What is the earliest known written record of the existence of Bengaluru?,c_t1_1.png,"Inscription stone at Panchalingeshwara Temple, Begur.",false 
+culture,t1,2,c_t1_2,The historic precinct of Bengaluru was divided into two parts. What were they called? ,c_t1_2.png,Pete (Market) and Kote (Fort) ,true    
+urban ,t1,1,u_t1_1,How many Kempegowda towers were built and what was their primary purpose?,u_t1_1.png,Four Towers - Watchpoints and boundary markers to demarcate the extent of the old city. ,false 
+urban ,t1,2,u_t1_2,Which temple was constructed by the Vijayanagara kings as a mark of safeguarding a major entrygate to the Bengaluru Fort?,u_t1_2.png,Yelahanka Gate Anjaneya Swamy Temple,true    
+ecology ,t1,1,e_t1_1,Which 3 historical dynasties were  responsible for constructing the tank systems in the Bengaluru region over the past 2000 years?,e_t1_1.png,"The Gangas, the Cholas, and the Hoysalas.",false 
+ecology ,t1,2,e_t1_2,"The Karaga festival, celebrated annually worships water as the protector of life. With which historic tank in the city is the festival associated? ",e_t1_2.png,The Sampangi Tank.,true    
+governance,t1,1,g_t1_1,"Who purchased Bangalore from the Mughals in the late 17th century, and what was the amount paid for it?",g_t1_1.png,Chikka Devaraja Wodeyar of Mysore State bought Bangalore from the Mughal general Khasim Khan for 3 lakh rupees.,false 
+governance,t1,2,g_t1_2,What were the infrastructural elements  built between tanks and lakes to manage and control the flow of wate called as?,g_t1_2.png,Sluice Gates,true    
+culture,t2,1,c_t2_1,In which year did the British army conquer the Bengaluru fort?,c_t2_1.png,1791,false 
+culture,t2,2,c_t2_2,"‘Rashk-e-Jannat,’ meaning ‘envy of heaven,’ was a phrase used by Tipu Sultan to describe which place in Bengaluru?",c_t2_2.png,Tipu Sultan's Summer Palace,true    
+urban ,t2,1,u_t2_1,The iconic semi-circular Kempegowda Bus Station stands on the site of which historic tank?,u_t2_1.png,Dharmambudhi Tank,true    
+urban ,t2,2,u_t2_2,"The Bengaluru Karaga procession, which goes through the old pete areas , begins at which historic temple in the pete area?",u_t2_2.png,Shree Dharmaraya Swamy Temple,false 
+ecology ,t2,1,e_t2_1,"In the 1850s, the water supply for the British Cantonment in Bangalore was chiefly dependent on which three tanks?",e_t2_1.png,"Sampangi Tank, Ulsoor Tank and Shoolay Tank",true    
+ecology ,t2,2,e_t2_2,"Which traditional community was assoicated with building tanks, kalyanis and wells in Bengaluru?",e_t2_2.png,Mannu Vaddar Community,false 
+governance,t2,1,g_t2_1,"Bengaluru served as a key military base in the 18th century, where skilled artisans under Hyder Ali and Tipu Sultan developed the world’s first iron-cased war rockets, powerful weapons that played a decisive role in the Anglo-Mysore Wars. What were these pioneering rocket-based weapons called?",g_t2_1.png,Mysorean Rockets or Bangalore Torpedos,false 
+governance,t2,2,g_t2_2,Who is credited with re-constructing the mud fort entirely in stone for strengthening the military defence of Bengaluru.,g_t2_2.png,Hyder Ali ,false 
+culture,t3,1,c_t3_1,What was MG Road previously called as?,c_t3_1.png,South Parade Road,false 
+culture,t3,2,c_t3_2,"In the 1940s, this Dewan took an active interest in converting an open land into a 25-acre park in Basavanagudi.Who was this Dewan?",c_t3_2.png,Sir M N Krishna Rao ,true    
+urban ,t3,1,u_t3_1,What major public infrastructure was established in the Cantonment area around 1854?,u_t3_1.png,The Cantonment Railway Station.,false 
+urban ,t3,2,u_t3_2,"What was NIMHANS, India’s premier national centre for mental health and neuroscience,  previously called?",u_t3_2.png,Bangalore Lunatic Asylum,true    
+ecology ,t3,1,e_t3_1,"Which tank, newly constructed in the 1870s, was situated outside both administrative boundaries and supplied water to both the City and the C&M Station?",e_t3_1.png,Sankey Tank,true    
+ecology ,t3,2,e_t3_2,What major park served as a buffer zone between the Cantonment and the Pete?,e_t3_2.png,Cubbon Park,false 
+governance,t3,1,g_t3_1,"Completed in 1868 to house the government offices of the British administration, this building later became the Karnataka State High Court. By what name, was the building previously called?",g_t3_1.png,Attara Kacheri,true    
+governance,t3,2,g_t3_2,"Completed in 1868 to house the government offices of the British administration, this building later became the Karnataka State High Court. By what name, was the building previously called?",g_t3_2.png,Residency/Raj Bhavan,true    
+culture,t4,1,c_t4_1,Which government factory setup by the Wodeyars has earned a GI tag for its product?,c_t4_1.png,Mysore Sandal Soap Factory,true    
+culture,t4,2,c_t4_2,What was the collective name given to the economic institutions setup in Bengaluru under the Central Government?,c_t4_2.png,Public Sector Undertakings,false 
+urban ,t4,1,u_t4_1,"Planned neighborhoods like Basavangudi, Malleswaram, and Frazer Town were developed in response to which event?",u_t4_1.png,The Bubonic  Plague of 1897,false 
+urban ,t4,2,u_t4_2,John Cameron served as the Superintendent of Lalbagh from 1874 to 1908 and oversaw major expansions to the gardens. He is specifically known for the construction of which iconic Bengaluru landmark?,u_t4_2.png,Lalbagh Glass House,true    
+ecology ,t4,1,e_t4_1,Which ancient rock formation in Bengaluru—dating back nearly 3 billion years -was declared a National Geological Monument in 1975?,e_t4_1.png,The Lalbagh Rock ,true    
+ecology ,t4,2,e_t4_2,A 1958 Expert Committee on Water Supply first recommended using the _____ River as a source in addition to the Arkavathy.,e_t4_2.png,Cauvery,false 
+governance,t4,1,g_t4_1,Which planning agency announced the creation of new post-independence layouts like Jayanagar and Rajajinagar?,g_t4_1.png,The City Improvement Trust Board (CITB).,false 
+governance,t4,2,g_t4_2,Which Chief Minister of the erstwhile Mysore State is credited with championing the idea and overseeing the construction of the Vidhana Soudha?,g_t4_2.png,Kengal Hanumanthaiah,true    

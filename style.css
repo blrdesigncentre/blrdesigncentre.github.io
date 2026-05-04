@@ -2161,3 +2161,101 @@ padding: 35px 5px 5px 5px;
 }
 
 /* #endregion */
+
+/* #region Theme Toggle Button */
+#theme-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.theme-btn {
+  padding: 0.35rem 1rem;
+  font-size: var(--font-size-xs);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  border: 1.5px solid var(--primary-grey);
+  color: var(--primary-grey);
+  border-radius: 2rem;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.theme-btn.active {
+  opacity: 1;
+  background: var(--primary-grey);
+  color: var(--background-beige);
+}
+/* #endregion */
+
+/* #region Dark Theme */
+[data-theme="dark"] {
+  --primary-beige: #2e2b3a;
+  --primary-dark-blue: #9b8fe8;
+  --primary-yellow: #f5a623;
+  --primary-red: #ff5a45;
+  --primary-green: #5bbfa3;
+  --primary-grey: #e8e0d8;
+  --primary-purple: #d49ed0;
+  --background-beige: #12111a;
+  --gameboard-beige: #1c1b28;
+  --bg-light: #2a2938;
+  --bg-white: #1e1d2b;
+  --text-dark: #e8e8e8;
+  --text-light: #a8a8c0;
+  --secondary-grey: #8888a0;
+}
+
+[data-theme="dark"] body {
+  background-color: var(--background-beige);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: var(--primary-grey);
+}
+
+[data-theme="dark"] #timer-countdown {
+  color: var(--primary-grey);
+  border-color: var(--primary-grey);
+}
+
+[data-theme="dark"] .question-content-box,
+[data-theme="dark"] #qd-question-content,
+[data-theme="dark"] #qd-answer-content {
+  background-color: var(--gameboard-beige);
+  border-color: rgba(255,255,255,0.1);
+}
+
+[data-theme="dark"] .timeline-marker {
+  background-color: var(--gameboard-beige);
+  color: var(--primary-grey);
+  border-color: rgba(255,255,255,0.15);
+}
+
+[data-theme="dark"] .team-item {
+  background-color: var(--gameboard-beige);
+}
+
+[data-theme="dark"] .shuffle-card-fullscreen-overlay {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+[data-theme="dark"] .shuffle-card-fullscreen {
+  background-color: var(--gameboard-beige);
+}
+
+[data-theme="dark"] #rf-score-screen,
+[data-theme="dark"] #rapid-fire-screen {
+  background-color: var(--background-beige);
+}
+
+[data-theme="dark"] #clue-overlay {
+  background: rgba(0, 0, 0, 0.9);
+}
+/* #endregion */

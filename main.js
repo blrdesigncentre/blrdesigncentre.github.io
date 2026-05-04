@@ -1,3 +1,34 @@
+// Theme
+(function () {
+  const saved = localStorage.getItem('wob-theme') || 'light';
+  if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const lightBtn = document.getElementById('theme-light');
+    const darkBtn = document.getElementById('theme-dark');
+    if (!lightBtn || !darkBtn) return;
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        darkBtn.classList.add('active');
+        lightBtn.classList.remove('active');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        lightBtn.classList.add('active');
+        darkBtn.classList.remove('active');
+      }
+      localStorage.setItem('wob-theme', theme);
+    }
+
+    // Sync button state on load
+    setTheme(saved);
+
+    lightBtn.addEventListener('click', () => setTheme('light'));
+    darkBtn.addEventListener('click', () => setTheme('dark'));
+  });
+})();
+
 // Question Bank Storage
 const questionBank = {};
 
@@ -767,7 +798,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         gameState.selectedShuffleCard = null;
         shuffleBadge.classList.remove('used');
         shuffleBadge.innerHTML = `
-          <div class="qd-badge-icon"><img src="/collateral/png/1x/shuffle-card.png"></div>
+          <div class="qd-badge-icon"><img src="collateral/png/1x/shuffle-card.png"></div>
         `;
       } else {
         // Fallback if question not found
@@ -787,13 +818,13 @@ document.addEventListener('DOMContentLoaded', async function() {
       // Update badge text and icon based on category
    
       const categoryIcons = {
-        'c': '/collateral/png/1x/culture-card.png',
-        'u': '/collateral/png/1x/urban-card.png',
-        'e': '/collateral/png/1x/ecology-card.png',
-        'g': '/collateral/png/1x/governance-card.png'
+        'c': 'collateral/png/1x/culture-card.png',
+        'u': 'collateral/png/1x/urban-card.png',
+        'e': 'collateral/png/1x/ecology-card.png',
+        'g': 'collateral/png/1x/governance-card.png'
       };
 
-      document.getElementById('qd-question-icon').src = categoryIcons[category] || '/collateral/png/1x/culture-card.png';
+      document.getElementById('qd-question-icon').src = categoryIcons[category] || 'collateral/png/1x/culture-card.png';
     });
   });
 

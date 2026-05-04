@@ -1,0 +1,11 @@
+id,effect,detail,icon
+1,Auto Surge,Lose 5 points if you are wrong!,auto-surge.png
+2,Gridlock,Choose a team! They cannot buzz for the steal this turn.,gridlock.png
+3,Signal Jump,Pick a team! They lose 5 points instantly.,signal-jump.png
+4,Tender Coconut Break,Team gets one FREE re-try if the first answer is wrong.,tender-coconut.png
+5,Kempegowda Stamp,Your team gets an immediate +5 points regardless of outcome.,kempegowda-stamp.png
+6,Gossip Katte,The facilitators give a hint. They might mislead you!,gossip-aunties.png
+7,Shortcut,You may swap your chosen question for ANY other,shortcut.png
+8,Friendly Passenger,Pick another team! They score bonus points if you answer correctly,friendly-passenger.png
+9,Sudden Shower,No floor steel allowed! The question dies if you miss,sudden-shower.png
+10,Pothole,The team to your right chooses who answers on your team.,pothole.png

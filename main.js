@@ -1638,7 +1638,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Update score display
     const teamName = gameState.teams[gameState.rapidFire.currentTeamIndex].name;
     document.getElementById('rf-team-name').textContent = teamName;
-    document.getElementById('rf-score-text').textContent = `Score: ${gameState.rapidFire.score}/5`;
+    document.getElementById('rf-score-text').textContent = `Score: ${gameState.rapidFire.score}/50`;
 
     // Update team's actual score
     updateScore(gameState.rapidFire.currentTeamIndex, gameState.rapidFire.score);
@@ -1708,7 +1708,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('rf-answer-content').classList.remove('hidden');
 
     // Increment score
-    gameState.rapidFire.score++;
+    gameState.rapidFire.score += 10;
   });
 
   // Wrong answer button

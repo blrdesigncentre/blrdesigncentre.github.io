@@ -38,6 +38,21 @@ const shuffleCards = [];
 // Rapid Fire Questions Storage
 const rapidFireQuestions = [];
 
+// Audio
+const sounds = {
+  intro: new Audio('collateral/audio/intro.mp3'),
+  timer: new Audio('collateral/audio/timer.mp3'),
+  wrong: new Audio('collateral/audio/wrong.mp3'),
+  round: new Audio('collateral/audio/round.mp3'),
+  cheer: new Audio('collateral/audio/cheer.mp3')
+};
+sounds.timer.loop = true;
+
+function playSound(sound) {
+  Object.values(sounds).forEach(s => { s.pause(); s.currentTime = 0; });
+  sound.play();
+}
+
 // Parse CSV data
 function parseCSV(text) {
   const lines = text.split('\n');
@@ -306,6 +321,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // New Game Button Handler
   document.getElementById('newGame').addEventListener('click', function() {
+    playSound(sounds.intro);
+
     // Clear any saved game
     clearSavedGame();
 
@@ -350,6 +367,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // Timer Button Handlers
   document.getElementById('timer-start').addEventListener('click', function() {
+    playSound(sounds.timer);
     startTimer();
   });
 
@@ -568,6 +586,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       timerState.intervalId = null;
     }
     timerState.isRunning = false;
+    sounds.timer.pause();
+    sounds.timer.currentTime = 0;
   }
 
   function resetTimer() {
@@ -1162,6 +1182,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // Correct Answer Handler
   document.getElementById('qd-correct').addEventListener('click', function() {
+    playSound(sounds.cheer);
+    setTimeout(() => { sounds.cheer.pause(); sounds.cheer.currentTime = 0; }, 4000);
+
     // Reveal answer only
     document.getElementById('qd-answer-content').classList.add('revealed');
 
@@ -1227,6 +1250,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   // Wrong Answer Handler
   document.getElementById('qd-wrong').addEventListener('click', function() {
+    playSound(sounds.wrong);
+
     if (gameState.isFloorMode) {
       // Floor mode wrong answer: reveal answer and mark as answered
       document.getElementById('qd-answer-content').classList.add('revealed');
@@ -1445,6 +1470,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Timeline Button Click Handlers (for round selection)
   document.querySelectorAll('.timeline-button').forEach((button, index) => {
     button.addEventListener('click', function() {
+      playSound(sounds.round);
+
       const roundNum = index + 1;
       gameState.currentRound = roundNum;
       gameState.turnsThisRound = 0; // Reset turns when manually changing rounds

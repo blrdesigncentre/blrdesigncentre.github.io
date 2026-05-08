@@ -92,7 +92,7 @@ function parseCSV(text) {
 async function loadQuestionBank() {
   try {
     const response = await fetch('./collateral/questions/question-bank.csv');
-    const text = await response.text();
+    const text = new TextDecoder('windows-1252').decode(await response.arrayBuffer());
 
     // Parse CSV
     const data = parseCSV(text);
@@ -129,7 +129,7 @@ async function loadQuestionBank() {
 async function loadShuffleCards() {
   try {
     const response = await fetch('./collateral/questions/city-shuffle.csv');
-    const text = await response.text();
+    const text = new TextDecoder('windows-1252').decode(await response.arrayBuffer());
 
     // Parse CSV
     const data = parseCSV(text);
@@ -157,7 +157,7 @@ async function loadShuffleCards() {
 async function loadRapidFireQuestions() {
   try {
     const response = await fetch('./collateral/questions/rapid-fire-bank.csv');
-    const text = await response.text();
+    const text = new TextDecoder('windows-1252').decode(await response.arrayBuffer());
 
     // Parse CSV
     const data = parseCSV(text);

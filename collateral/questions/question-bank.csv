@@ -3,10 +3,10 @@ culture,t1,1,c_t1_1,What is the earliest known written record of the existence o
 culture,t1,2,c_t1_2,The historic precinct of Bengaluru was divided into two parts. What were they called? ,c_t1_2.png,Pete (Market) and Kote (Fort) ,true    
 urban ,t1,1,u_t1_1,How many Kempegowda towers were built and what was their primary purpose?,u_t1_1.png,Four Towers - Watchpoints and boundary markers to demarcate the extent of the old city. ,false 
 urban ,t1,2,u_t1_2,Which temple was constructed by the Vijayanagara kings as a mark of safeguarding a major entrygate to the Bengaluru Fort?,u_t1_2.png,Yelahanka Gate Anjaneya Swamy Temple,true    
-ecology ,t1,1,e_t1_1,What were the infrastructural elements  built between tanks and lakes to manage and control the flow of wate called as?,e_t1_1.png,"The Gangas, the Cholas, and the Hoysalas.",false 
+ecology ,t1,1,e_t1_1,Which 3 historical dynasties were  responsible for constructing the tank systems in the Bengaluru region over the past 2000 years?,e_t1_1.png,"The Gangas, the Cholas, and the Hoysalas.",false 
 ecology ,t1,2,e_t1_2,"The Karaga festival, celebrated annually worships water as the protector of life. With which historic tank in the city is the festival associated? ",e_t1_2.png,The Sampangi Tank.,true    
 governance,t1,1,g_t1_1,"Who purchased Bangalore from the Mughals in the late 17th century, and what was the amount paid for it?",g_t1_1.png,Chikka Devaraja Wodeyar of Mysore State bought Bangalore from the Mughal general Khasim Khan for 3 lakh rupees.,false 
-governance,t1,2,g_t1_2,Which 3 historical dynasties were  responsible for constructing the tank systems in the Bengaluru region over the past 2000 years?,g_t1_2.png,Sluice Gates,true    
+governance,t1,2,g_t1_2,What were the infrastructural elements  built between tanks and lakes to manage and control the flow of water called as?,g_t1_2.png,Sluice Gates,true    
 culture,t2,1,c_t2_1,In which year did the British army conquer the Bengaluru fort?,c_t2_1.png,1791,false 
 culture,t2,2,c_t2_2,"Rashk-e-Jannat, meaning envy of heaven, was a phrase used by Tipu Sultan to describe which place in Bengaluru?",c_t2_2.png,Tipu Sultan's Summer Palace,true    
 urban ,t2,1,u_t2_1,The iconic semi-circular Kempegowda Bus Station stands on the site of which historic tank?,u_t2_1.png,Dharmambudhi Tank,true    

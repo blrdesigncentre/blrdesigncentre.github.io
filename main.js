@@ -280,15 +280,10 @@ function restoreTeamOrder() {
   container.innerHTML = '';
 
   // Re-append in correct order based on gameState.teams
-  gameState.teams.forEach((team, index) => {
+  gameState.teams.forEach((team) => {
     const teamElement = teamElementMap[team.id];
     if (teamElement) {
       container.appendChild(teamElement);
-      // Update order number
-      const orderInput = teamElement.querySelector('.team-order-number');
-      if (orderInput) {
-        orderInput.value = index + 1;
-      }
     }
   });
 }
@@ -443,63 +438,40 @@ document.addEventListener('DOMContentLoaded', async function() {
     enableTeamSelection(); // Enable team selection at start
     updateActiveColumns();
     updateTimerDisplay();
-    initializeTeamOrderNumbers(); // Initialize order number inputs
+    initializeTeamOrderButtons();
   }
 
-  // Team Order Number Functionality
-  function initializeTeamOrderNumbers() {
-    const orderInputs = document.querySelectorAll('.team-order-number');
-
-    orderInputs.forEach(input => {
-      input.addEventListener('change', function() {
-        handleOrderChange(this);
+  // Team Order Button Functionality
+  function initializeTeamOrderButtons() {
+    document.querySelectorAll('.order-up').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const teamId = this.dataset.teamId;
+        const currentPosition = getCurrentTeamPosition(teamId);
+        if (currentPosition <= 0) return;
+        reorderTeams(currentPosition, currentPosition - 1);
+        updateAllOrderNumbers();
+        saveGame();
       });
+    });
 
-      // Prevent scrolling when focused
-      input.addEventListener('wheel', function(e) {
-        e.preventDefault();
-      });
-
-      // Select text on focus for easy editing
-      input.addEventListener('focus', function() {
-        this.select();
+    document.querySelectorAll('.order-down').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const teamId = this.dataset.teamId;
+        const currentPosition = getCurrentTeamPosition(teamId);
+        if (currentPosition >= gameState.teams.length - 1) return;
+        reorderTeams(currentPosition, currentPosition + 1);
+        updateAllOrderNumbers();
+        saveGame();
       });
     });
   }
 
-  function handleOrderChange(input) {
-    let newOrder = parseInt(input.value);
-
-    // Get team ID from parent team-item
-    const teamItem = input.closest('.team-item');
-    const teamId = teamItem.dataset.teamId;
-
-    // Validate input
-    if (isNaN(newOrder) || newOrder < 1 || newOrder > 5) {
-      // Reset to current position
-      const currentPosition = getCurrentTeamPosition(teamId);
-      input.value = currentPosition + 1;
-      return;
-    }
-
-    // Convert to 0-based index
-    const newPosition = newOrder - 1;
-    const currentPosition = getCurrentTeamPosition(teamId);
-
-    if (newPosition === currentPosition) {
-      return; // No change
-    }
-
-    // Reorder teams
-    reorderTeams(currentPosition, newPosition);
-
-    // Update all order numbers
-    updateAllOrderNumbers();
-
-    // Save game
-    saveGame();
-
-    console.log('Teams reordered:', gameState.teams.map(t => t.name));
+  function updateAllOrderNumbers() {
+    const container = document.getElementById('teams-counter-container');
+    Array.from(container.querySelectorAll('.team-item')).forEach((item, index) => {
+      const span = item.querySelector('.team-order-number');
+      if (span) span.textContent = index + 1;
+    });
   }
 
   function getCurrentTeamPosition(teamId) {
@@ -514,26 +486,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     const movedTeam = gameState.teams.splice(fromIndex, 1)[0];
     gameState.teams.splice(toIndex, 0, movedTeam);
 
-    // Reorder in DOM
+    // Reorder in DOM — work from the original snapshot before any removal
     const movedItem = teamItems[fromIndex];
-    container.removeChild(movedItem);
-
     if (toIndex >= teamItems.length - 1) {
       container.appendChild(movedItem);
+    } else if (toIndex < fromIndex) {
+      // Moving up: insert before the item currently at toIndex
+      container.insertBefore(movedItem, teamItems[toIndex]);
     } else {
-      const referenceItem = teamItems[toIndex];
-      container.insertBefore(movedItem, referenceItem);
+      // Moving down: insert after the item currently at toIndex
+      // (toIndex+1 exists because toIndex < teamItems.length - 1 was false)
+      container.insertBefore(movedItem, teamItems[toIndex + 1]);
     }
-  }
-
-  function updateAllOrderNumbers() {
-    const container = document.getElementById('teams-counter-container');
-    const teamItems = Array.from(container.querySelectorAll('.team-item'));
-
-    teamItems.forEach((item, index) => {
-      const orderInput = item.querySelector('.team-order-number');
-      orderInput.value = index + 1;
-    });
   }
 
   // Enable team selection

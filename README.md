@@ -6,10 +6,7 @@ An interactive, team-based trivia game about Bengaluru's history, culture, urban
 
 ## How to Run
 
-1. Clone or download this repository.
-2. Open `index.html` in any modern browser (Chrome, Firefox, Edge).
-3. That's it. All data loads from local CSV files.
-
+Open the link in a browser: https://github.com/blrdesigncentre/blrdesigncentre.github.io
 > No build step, no dependencies to install. The only internet dependency is the Shoelace UI component library loaded via CDN — the game works offline once the page has loaded once.
 
 ---
@@ -28,7 +25,7 @@ The game autosaves to the browser's `localStorage` after every action. Refreshin
 | Element | Description |
 |---|---|
 | Timeline bar | 5 rounds: T1–T4 are the main rounds, T5 is Rapid Fire. Click a round to filter the question grid. |
-| Team scoreboard | 5 teams listed vertically. Use the ↑↓ arrows to reorder teams each round. |
+| Team scoreboard | 5 teams listed vertically. Each team has ▲ and ▼ buttons on the left — click them to move that team up or down one position. The number between the arrows shows the current order. |
 | Question grid | 4 categories × 4 timelines = 16 tiles. Each tile holds 2 questions. |
 | Timer | Default 25 seconds. Click the number to type a custom value, then press Start. |
 
